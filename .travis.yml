@@ -1,11 +1,14 @@
 {
-  "language": "java",
-  "group": "stable",
-  "dist": "precise",
-  "os": "linux",
+  language: java
+  
+  group: stable
+  
+  dist: precise
+  
+  os: linux
+  
   install: 
-    override:
-      - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-      - mvn test -Dmaven.test.failure.ignore=true
+    - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - mvn test -Dmaven.test.failure.ignore=true
 
 }
