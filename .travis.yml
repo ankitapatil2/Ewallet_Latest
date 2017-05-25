@@ -1,6 +1,6 @@
 env:
  global:
-   - "ARTIFACTS_AWS_REGION=us-west-2"
+   - "ARTIFACTS_S3_REGION=us-west-2"
    - "ARTIFACTS_S3_BUCKET=anksourceresized"
    - "travis encrypt ARTIFACTS_AWS_ACCESS_KEY_ID=AKIAJO3OBREX4XRNS22A -r ankitapatil2/EwalletWeb"
    - "ARTIFACTS_AWS_SECRET_ACCESS_KEY=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 -r ankitapatil2/EwalletWeb"
@@ -22,3 +22,16 @@ after_success: # and this only on success
   - "travis-artifacts upload --path .*/target/surefire-reports/.*xml"
 after_test:
   - "travis-artifacts upload --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID"
+addons:
+  artifacts:
+   debug: true
+    # ...
+    paths:
+    - $(git ls-files -o | tr "\n" ":")
+    - $(ls /var/log/*.log | tr "\n" ":")
+    - target/Ewallet_devops-0.0.1.war
+artifacts upload \
+  --key AKIAJO3OBREX4XRNS22A \
+  --secret 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 \
+  --bucket anksourceresized \
+  target/
