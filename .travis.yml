@@ -1,9 +1,25 @@
+env:
+ global:
+   - "ARTIFACTS_AWS_REGION=us-west-2"
+   - "ARTIFACTS_S3_BUCKET=anksourceresized"
+   - "travis encrypt ARTIFACTS_AWS_ACCESS_KEY_ID=AKIAJO3OBREX4XRNS22A -r ankitapatil2/EwalletWeb"
+   - "ARTIFACTS_AWS_SECRET_ACCESS_KEY=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 -r ankitapatil2/EwalletWeb"
 language: java
 group: stable
 dist: precise
 os: linux
 install: 
-- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+before_script:
+  - "gem install travis-artifacts"
 script:
-- mvn test -B -Dmaven.test.failure.ignore=true
-- mvn cobertura:cobertura -Dcobertura.report.format=xml
+  - mvn test -B -Dmaven.test.failure.ignore=true
+  - mvn cobertura:cobertura -Dcobertura.report.format=xml
+after_script:
+  - "travis-artifacts upload --path logs --path target/Ewallet_devops-0.0.1.war"
+after_failure: # this will of course run only on failure
+  - "travis-artifacts upload --path debug/debug.log"
+after_success: # and this only on success
+  - "travis-artifacts upload --path .*/target/surefire-reports/.*xml"
+after_test:
+  - "travis-artifacts upload --target-path artifacts/$TRAVIS_BUILD_ID/$TRAVIS_JOB_ID"
