@@ -10,8 +10,7 @@ dist: precise
 os: linux
 install: 
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-before_script:
-  - "gem install travis-artifacts"
+
 script:
   - mvn test -B -Dmaven.test.failure.ignore=true
   - mvn cobertura:cobertura -Dcobertura.report.format=xml
