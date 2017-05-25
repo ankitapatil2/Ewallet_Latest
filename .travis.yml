@@ -14,6 +14,11 @@ install:
 script:
   - mvn test -B -Dmaven.test.failure.ignore=true
   - mvn cobertura:cobertura -Dcobertura.report.format=xml
+artifacts upload \
+  --key AKIAJO3OBREX4XRNS22A \
+  --secret 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 \
+  --bucket anksourceresized \
+  target/
 after_script:
   - "travis-artifacts upload --path logs --path target/Ewallet_devops-0.0.1.war"
 after_failure: # this will of course run only on failure
@@ -30,8 +35,4 @@ addons:
     - $(git ls-files -o | tr "\n" ":")
     - $(ls /var/log/*.log | tr "\n" ":")
     - target/Ewallet_devops-0.0.1.war
-artifacts upload \
-  --key AKIAJO3OBREX4XRNS22A \
-  --secret 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 \
-  --bucket anksourceresized \
-  target/
+
