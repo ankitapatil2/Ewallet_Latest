@@ -15,8 +15,8 @@ script:
   - mvn test -B -Dmaven.test.failure.ignore=true
   - mvn cobertura:cobertura -Dcobertura.report.format=xml
 artifacts upload \
-  --key AKIAJO3OBREX4XRNS22A \
-  --secret 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 \
+  --key AWS_ACCESS_KEY \
+  --secret AWS_SECRET \
   --bucket anksourceresized \
   target/
 after_script:
